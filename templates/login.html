@@ -1,0 +1,30 @@
+
+{% extends "base.html" %}
+{% block title %}Login - Cinnamon Chapters{% endblock %}
+{% block content %}
+<div class="form-container">
+    <h2>Login</h2>
+    <form method="POST" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
+
+        <div>
+            {{ form.nickname.label }}
+            {{ form.nickname(class_="form-input") }}
+        </div>
+
+        <div>
+            {{ form.password.label }}
+            {{ form.password(class_="form-input") }}
+        </div>
+
+        <div>
+            {{ form.submit(class_="btn") }}
+        </div>
+    </form>
+
+    <p class="text-center text-[#a47250] mt-4">
+        Don't have an account?
+        <a href="{{ url_for('register') }}" class="text-[#a47250] hover:underline">Sign up</a>
+    </p>
+</div>
+{% endblock %}

@@ -1,0 +1,169 @@
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #1e1b18;
+    color: #f5efe6;
+    font-family: 'Lora', 'Inter', serif;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+header {
+    background-color: #2a2522;
+    padding: 1rem 2rem;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.2rem;
+    margin: 0;
+    color: #f5efe6;
+}
+
+.auth-buttons a {
+    margin-left: 1rem;
+}
+
+main {
+    flex: 1;
+    padding: 2rem;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+footer {
+    background-color: #2a2522;
+    text-align: center;
+    padding: 1rem;
+    font-size: 0.9rem;
+    color: #c2a582;
+}
+
+.btn {
+    background-color: transparent;
+    color: #a47250;
+    border: 1px solid #a47250;
+    padding: 6px 12px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    line-height: 1.2;
+    transition: all 0.3s;
+    text-decoration: none;
+    min-width: auto;
+}
+
+.btn:hover {
+    background-color: #a47250;
+    color: #1e1b18;
+}
+
+.form-container {
+    background-color: #2a2522;
+    padding: 5rem;
+    border-radius: 14px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+input, label {
+    display: block;
+    width: 100%;
+    margin-bottom: 1rem;
+}
+
+input[type="text"], input[type="email"], input[type="password"] {
+    padding: 0.5rem;
+    border: 1px solid #a47250;
+    border-radius: 6px;
+    background-color: #3b3431;
+    color: #f5efe6;
+}
+
+.flash.error {
+    color: #ffb3a7;
+    font-weight: bold;
+}
+
+.intro-text {
+    font-size: 1.2rem;
+    margin: 1rem 0;
+    color: #d6c4b2;
+}
+
+.greeting {
+    margin-top: 1rem;
+    font-style: italic;
+    color: #c2a582;
+}
+
+.logo a,
+.home-link {
+    color: #a47250;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.logo a:hover {
+    color: #c2a582;
+}
+
+.hidden-file-input {
+    display: none;
+}
+
+.flashes {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.flash {
+  background-color: #3b3431;
+  border-left: 6px solid #a47250;
+  color: #f5efe6;
+  padding: 1rem 1.5rem;
+  border-radius: 12px;
+  font-weight: 500;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+  animation: fadeInOut 4s ease-in-out forwards;
+  opacity: 0;
+}
+
+.flash.success {
+  border-color: #8ec07c;
+  background-color: #2d372e;
+  color: #ccebc5;
+}
+
+.flash.error {
+  border-color: #fb4934;
+  background-color: #3b2d2d;
+  color: #ffc9c9;
+}
+
+@keyframes fadeInOut {
+  0% { opacity: 0; transform: translateY(-10px); }
+  10% { opacity: 1; transform: translateY(0); }
+  90% { opacity: 1; transform: translateY(0); }
+  100% { opacity: 0; transform: translateY(-10px); }
+}
+
+.custom-file-upload input[type="file"] {
+  display: none;
+}
+
+

@@ -1,0 +1,51 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Cinnamon Chapters{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Inter&family=Lora&display=swap" rel="stylesheet">
+</head>
+<body>
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    <div class="flashes">
+      {% for category, message in messages %}
+        <p class="flash {{ category }}">{{ message }}</p>
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endwith %}
+    <header>
+        <div class="header-container">
+            <h1 class="logo">
+                <a href="{{ url_for('home') }}" class="home-link">Cinnamon Chapters</a>
+            </h1>
+
+            <div class="auth-buttons">
+                {% if current_user.is_authenticated %}
+                    <span>Hello, {{ current_user.nickname }}!</span>
+                    <a href="{{ url_for('logout') }}" class="btn">Logout</a>
+                    {% if current_user.is_authenticated and current_user.nickname == 'Admin' %}
+                      <a href="{{ url_for('add_position') }}" class="btn">Add product</a>
+                    {% endif %}
+                {% else %}
+                    <a href="{{ url_for('login') }}" class="btn">Login</a>
+                    <a href="{{ url_for('register') }}" class="btn">Sign up</a>
+                {% endif %}
+            </div>
+        </div>
+    </header>
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer>
+        &copy; 2025 Cinnamon Chapters — a café for book lovers and dreamers.
+    </footer>
+    <script src="{{ url_for('static', filename='js/flashes.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,46 @@
+
+{% extends "base.html" %}
+{% block title %}Adding a new position - Cinnamon Chapters{% endblock %}
+{% block content %}
+<div class="form-container">
+    <h2>Adding a new position</h2>
+        <form method="POST" enctype="multipart/form-data">
+            {{ form.hidden_tag() }}
+
+            <div>
+                {{ form.name.label }}
+                {{ form.name(size=20) }}
+            </div>
+
+            <div>
+                {{ form.price.label }}
+                {{ form.price(step="0.01") }}
+            </div>
+
+            <div class="custom-file-upload">
+              <label for="file-upload" class="btn">Choose file</label>
+              <input id="file-upload" type="file" name="image" accept="image/*">
+            </div>
+
+            <div>
+                {{ form.ingredients.label }}
+                {{ form.ingredients(size=40) }}
+            </div>
+
+            <div>
+                {{ form.description.label }}
+                {{ form.description(size=40) }}
+            </div>
+
+            <div>
+                {{ form.weight.label }}
+                {{ form.weight(step="0.01") }}
+            </div>
+
+            <div>
+                {{ form.submit(class_="btn") }}
+            </div>
+        </form>
+</div>
+
+{% endblock %}
