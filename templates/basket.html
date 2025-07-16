@@ -1,0 +1,49 @@
+
+{% extends 'base.html' %}
+{% block content %}
+<div class="basket-container">
+    <h2 class="intro-text">Your Basket</h2>
+
+    <div class="basket-summary">
+        <p class="intro-text"><strong>Subtotal:</strong> {{ '%.1f' % total }} £</p>
+        <a href="{{ url_for('create_order') }}" class="btn">
+            Proceed to checkout ({{ items|length }} item{{ '' if items|length == 1 else 's' }})
+        </a>
+
+        <form action="{{ url_for('clear_basket') }}" method="post" style="margin-top: 1em;">
+            {{ form.hidden_tag() }}
+            <button type="submit" class="btn">Clear Basket</button>
+        </form>
+
+    </div>
+
+    {% for item in items %}
+    <div class="basket-item">
+        <img class="basket-image" src="{{ url_for('static', filename='menu/' ~ item.img) }}" alt="{{ item.name }}">
+
+        <div class="item-info">
+            <h3>{{ item.name }}</h3>
+            <p>{{ item.price }} £</p>
+            <p class="greeting">In stock</p>
+        </div>
+
+        <div class="item-controls">
+            <form action="{{ url_for('update_quantity') }}" method="post">
+                {{ form.hidden_tag() }}
+                <input type="hidden" name="item_name" value="{{ item.name }}">
+                <button name="action" value="decrease" class="btn">−</button>
+                <span>{{ item.quantity }}</span>
+                <button name="action" value="increase" class="btn">+</button>
+            </form>
+
+            <form action="{{ url_for('remove_item') }}" method="post" style="display:inline;">
+                {{ form.hidden_tag() }}
+                <input type="hidden" name="item_name" value="{{ item.name }}">
+                <button type="submit" class="btn">Delete</button>
+            </form>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
+

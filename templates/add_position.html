@@ -17,9 +17,9 @@
                 {{ form.price(step="0.01") }}
             </div>
 
-            <div class="custom-file-upload">
-              <label for="file-upload" class="btn">Choose file</label>
-              <input id="file-upload" type="file" name="image" accept="image/*">
+            <div>
+              {{ form.img.label }}
+              {{ form.img(class_="btn") }}
             </div>
 
             <div>
@@ -35,6 +35,11 @@
             <div>
                 {{ form.weight.label }}
                 {{ form.weight(step="0.01") }}
+            </div>
+
+            <div>
+                {{ form.category.label }}
+                {{ form.category(size=40) }}
             </div>
 
             <div>

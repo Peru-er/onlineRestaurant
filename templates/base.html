@@ -25,6 +25,11 @@
             </h1>
 
             <div class="auth-buttons">
+                <a href="{{ url_for('menu') }}" class="btn">Menu</a>
+                <a href="{{ url_for('basket') }}" class="btn">Basket</a>
+            </div>
+
+            <div class="auth-buttons">
                 {% if current_user.is_authenticated %}
                     <span>Hello, {{ current_user.nickname }}!</span>
                     <a href="{{ url_for('logout') }}" class="btn">Logout</a>

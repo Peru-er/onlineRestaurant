@@ -1,0 +1,15 @@
+
+{% extends "base.html" %}
+{% block title %}Menu - Cinnamon Chapters{% endblock %}
+{% block content %}
+<h2>Our menu</h2>
+    {% for position in all_positions %}
+        <div class="form-container">
+            <img src="/static/menu/{{ position.file_name }}" alt="{{ position.name }}" width="200">
+            <h3>{{ position.name }}</h3>
+            <p>{{ position.ingredients }}</p>
+            <a href="/position/{{ position.name }}" class="btn">View in more detail</a>
+        </div>
+        <hr>
+    {% endfor %}
+{% endblock %}

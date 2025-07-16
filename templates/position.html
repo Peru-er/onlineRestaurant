@@ -1,0 +1,20 @@
+
+{% extends "base.html" %}
+{% block title %}Position - Cinnamon Chapters{% endblock %}
+{% block content %}
+
+    <img src="/static/menu/{{ position.file_name }}">
+    <p>{{ position.name }} ({{ position.weight }}{{ 'ml' if position.category == 'Drinks' else 'g' }})</p>
+    <small>{{ position.ingredients }}</small>
+    <p>Description:</p>
+    <pre>{{ position.description }}</pre>
+    <p>{{ position.price }} £</p>
+
+    <form method="POST">
+        {{ form.hidden_tag() }}
+        {{ form.num.label }} {{ form.num(min=1) }}
+        {{ form.submit(class_="btn") }}
+    </form>
+
+{% endblock %}
+
