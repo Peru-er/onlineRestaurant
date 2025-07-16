@@ -1,0 +1,12 @@
+
+{% extends 'base.html' %}
+{% block title %}My orders - Cinnamon Chapters{% endblock %}
+{% block content %}
+
+    <h2>Yours orders</h2>
+    {% for order in us_orders %}
+        <p>Order №{{ order.id }} from {{ order.order_time }}</p>
+        <a href="/my_order/{{ order.id }}" class="btn">View in more detail</a>
+    {% endfor %}
+
+{% endblock %}

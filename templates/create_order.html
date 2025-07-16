@@ -11,7 +11,7 @@
         </ul>
         <form method="POST">
             {{ form.hidden_tag() }}
-            {{ form.submit() }}
+            {{ form.submit(class="btn") }}
         </form>
     {%else%}
         <h1>Your list of orders is empty.</h1>

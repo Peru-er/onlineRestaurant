@@ -1,5 +1,6 @@
 
 {% extends 'base.html' %}
+{% block title %}Basket - Cinnamon Chapters{% endblock %}
 {% block content %}
 <div class="basket-container">
     <h2 class="intro-text">Your Basket</h2>
@@ -9,12 +10,6 @@
         <a href="{{ url_for('create_order') }}" class="btn">
             Proceed to checkout ({{ items|length }} item{{ '' if items|length == 1 else 's' }})
         </a>
-
-        <form action="{{ url_for('clear_basket') }}" method="post" style="margin-top: 1em;">
-            {{ form.hidden_tag() }}
-            <button type="submit" class="btn">Clear Basket</button>
-        </form>
-
     </div>
 
     {% for item in items %}

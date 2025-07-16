@@ -288,6 +288,21 @@ def remove_item():
 
     return redirect(url_for('basket'))
 
+@app.route('/my_orders')
+@login_required
+def my_orders():
+    with Session() as cursor:
+        us_orders = cursor.query(Orders).filter_by(user_id=current_user.id).all()
+    return render_template('my_orders.html', us_orders=us_orders)
+
+@app.route("/my_order/<int:id>")
+@login_required
+def my_order(id):
+    with Session() as cursor:
+        us_order = cursor.query(Orders).filter_by(id=id).first()
+        total_price = sum(int(cursor.query(Menu).filter_by(name=i).first().price) * int(cnt) for i, cnt in us_order.order_list.items())
+    return render_template('my_order.html', order=us_order, total_price=total_price)
+
 
 if __name__ == '__main__':
     app.run(debug=True)

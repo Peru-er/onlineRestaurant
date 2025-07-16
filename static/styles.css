@@ -211,4 +211,11 @@ input[type="text"], input[type="email"], input[type="password"] {
     align-items: flex-end;
 }
 
+.item-controls form:first-child {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+
 
