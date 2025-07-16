@@ -3,10 +3,6 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, FloatField, FileField, IntegerField, HiddenField
 from wtforms.validators import DataRequired, Email, EqualTo, NumberRange
 
-class RegisterForm(FlaskForm):
-    nickname = StringField('Nickname', validators=[DataRequired()])
-    email = StringField('Email', validators=[DataRequired(), Email()])
-    password = PasswordField('Password', validators=[DataRequired()])
 
 class RegisterForm(FlaskForm):
     nickname = StringField('Nickname', validators=[DataRequired()])
@@ -40,4 +36,11 @@ class OrderForm(FlaskForm):
 
 class DummyForm(FlaskForm):
     pass
+
+class ReserveTableForm(FlaskForm):
+    table_type = StringField('Table Type', validators=[DataRequired()])
+    time = StringField('Time', validators=[DataRequired()])
+    latitude = HiddenField('Latitude')
+    longitude = HiddenField('Longitude')
+    submit = SubmitField('Reserve')
 

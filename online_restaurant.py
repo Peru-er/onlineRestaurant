@@ -2,6 +2,7 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, session, abort
 
 from flask_login import LoginManager, login_required, current_user, login_user, logout_user
+from geopy.distance import geodesic
 
 from online_restaurant_db import Session, Users, Menu, Orders, Reservation
 from datetime import datetime
@@ -13,7 +14,7 @@ from dotenv import load_dotenv
 import os
 import uuid
 
-from forms import RegisterForm, LoginForm, AddPositionForm, AddToCartForm, OrderForm, DummyForm
+from forms import RegisterForm, LoginForm, AddPositionForm, AddToCartForm, OrderForm, DummyForm, ReserveTableForm
 from werkzeug.security import generate_password_hash, check_password_hash
 
 
@@ -288,20 +289,81 @@ def remove_item():
 
     return redirect(url_for('basket'))
 
-@app.route('/my_orders')
+@app.route('/my_orders/')
 @login_required
 def my_orders():
+    form = DummyForm()
     with Session() as cursor:
         us_orders = cursor.query(Orders).filter_by(user_id=current_user.id).all()
-    return render_template('my_orders.html', us_orders=us_orders)
+    return render_template('my_orders.html', us_orders=us_orders, form=form)
 
 @app.route("/my_order/<int:id>")
 @login_required
 def my_order(id):
+    form = DummyForm()
     with Session() as cursor:
         us_order = cursor.query(Orders).filter_by(id=id).first()
-        total_price = sum(int(cursor.query(Menu).filter_by(name=i).first().price) * int(cnt) for i, cnt in us_order.order_list.items())
-    return render_template('my_order.html', order=us_order, total_price=total_price)
+        total_price = sum(
+            cursor.query(Menu).filter_by(name=i).first().price * int(cnt)
+            for i, cnt in us_order.order_list.items()
+        )
+    return render_template('my_order.html', order=us_order, total_price=total_price, form=form)
+
+@app.route('/cancel_order/<int:order_id>', methods=['POST'])
+@login_required
+def cancel_order(order_id):
+    form = DummyForm()
+    if form.validate_on_submit():
+        with Session() as db:
+            order = db.query(Orders).filter_by(id=order_id, user_id=current_user.id).first()
+            if not order:
+                abort(404)
+            db.delete(order)
+            db.commit()
+        flash("Order cancelled.", "info")
+    else:
+        flash("Invalid form submission.", "danger")
+    return redirect(url_for('my_orders'))
+
+@app.route('/reserved/', methods=['GET', 'POST'])
+@login_required
+def reserved():
+    form = ReserveTableForm()
+    message = ''
+
+    if form.validate_on_submit():
+        if form.csrf_token.data != session.get("csrf_token"):
+            return "Request blocked.", 403
+
+        table_type = form.table_type.data
+        reserved_time_start = form.time.data
+        user_latitude = form.latitude.data
+        user_longitude = form.longitude.data
+
+        if not user_longitude or not user_latitude:
+            message = 'You have not provided your location information.'
+        else:
+            user_cords = (float(user_latitude), float(user_longitude))
+            distance = geodesic(MARGANETS_COORDS, user_cords).km
+            if distance > LONDON_RADIUS_KM:
+                message = "You are in an area not available for booking."
+            else:
+                with Session() as cursor:
+                    reserved_check = cursor.query(Reservation).filter_by(type_table=table_type).count()
+                    user_reserved_check = cursor.query(Reservation).filter_by(user_id=current_user.id).first()
+
+                    if reserved_check < TABLE_NUM.get(table_type) and not user_reserved_check:
+                        new_reserved = Reservation(type_table=table_type, time_start=reserved_time_start, user_id=current_user.id)
+                        cursor.add(new_reserved)
+                        cursor.commit()
+                        message = f'Reservation for {reserved_time_start} table for {table_type} people has been successfully created.'
+                    elif user_reserved_check:
+                        message = 'You can only have one active reservation.'
+                    else:
+                        message = 'Unfortunately, this type of table is currently not available for reservation.'
+
+    return render_template('reserved.html', form=form, message=message)
+
 
 
 if __name__ == '__main__':

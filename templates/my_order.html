@@ -10,10 +10,11 @@
                 <li>{{ name }} — number: {{ quantity }}</li>
             {% endfor %}
         </ul>
-        <p><strong>Date and time:</strong> {{ order.order_time }}</p>
-        <p><strong>Total amount:</strong> Total amount:{{ total_price }} £</p>
+        <p><strong>Date and time:</strong> {{ order.order_time.strftime('%Y-%m-%d %H:%M') }}</p>
+        <p><strong>Total amount:</strong> Total amount: {{ total_price }} £</p>
 
-        <form method="post" action="/cancel_order/{{ order.id }}">
+        <form method="post" action="{{ url_for('cancel_order', order_id=order.id) }}">
+            {{ form.hidden_tag() }}
             <button type="submit" class="btn">Cancel order</button>
         </form>
 

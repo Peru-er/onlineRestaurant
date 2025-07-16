@@ -1,0 +1,26 @@
+
+{% extends 'base.html' %}
+{% block title %}Basket - Cinnamon Chapters{% endblock %}
+{% block content %}
+
+<h2>Table reservation</h2>
+
+    <form method="post">
+        {{ form.hidden_tag() }}
+
+        <p>Choose a table type</p>
+        {{ form.table_type(class="form-control") }}
+
+        {{ form.time(type="datetime-local", class="form-control", required=true) }}
+
+        {{ form.latitude(id="latitude") }}
+        {{ form.longitude(id="longitude") }}
+
+        {{ form.submit(class="btn btn-primary") }}
+    </form>
+    <h3>{{ message }}</h3>
+
+
+    <script src="{{ url_for('static', filename='js/flashes.js') }}"></script>
+
+{% endblock %}
