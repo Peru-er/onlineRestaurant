@@ -1,0 +1,33 @@
+
+{% extends 'base.html' %}
+{% block title %}Reservation check - Cinnamon Chapters{% endblock %}
+{% block content %}
+
+<h2>Reservation check</h2>
+<table class="styled-table">
+    <tr>
+        <th>ID</th>
+        <th>Time</th>
+        <th>Type of table</th>
+        <th>User</th>
+        <th>Action</th>
+    </tr>
+    {% for res in all_reservations %}
+    <tr>
+        <td>{{ res.id }}</td>
+        <td>{{ res.time_start }}</td>
+        <td>{{ res.type_table }}</td>
+        <td>{{ res.user.nickname }}</td>
+        <td>
+            <form method="post">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+                <input type="hidden" name="reserv_id" value="{{ res.id }}">
+                <button class="btn" type="submit">Delete</button>
+            </form>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+
+
+{% endblock %}

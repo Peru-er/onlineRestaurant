@@ -1,6 +1,8 @@
 
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, FloatField, FileField, IntegerField, HiddenField
+from wtforms.fields.choices import SelectField
+from wtforms.fields.datetime import DateTimeLocalField
 from wtforms.validators import DataRequired, Email, EqualTo, NumberRange
 
 
@@ -38,9 +40,14 @@ class DummyForm(FlaskForm):
     pass
 
 class ReserveTableForm(FlaskForm):
-    table_type = StringField('Table Type', validators=[DataRequired()])
-    time = StringField('Time', validators=[DataRequired()])
+    table_type = SelectField('Table Type', choices=[
+        ('1-2', '1-2 people'),
+        ('3-4', '3-4 people'),
+        ('4+', 'More than 4 people')
+    ], validators=[DataRequired()])
+    time = DateTimeLocalField('Time', format='%Y-%m-%dT%H:%M', validators=[DataRequired()])
     latitude = HiddenField('Latitude')
     longitude = HiddenField('Longitude')
     submit = SubmitField('Reserve')
+
 

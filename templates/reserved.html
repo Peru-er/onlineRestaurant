@@ -1,26 +1,34 @@
 
 {% extends 'base.html' %}
-{% block title %}Basket - Cinnamon Chapters{% endblock %}
+{% block title %}Reservation - Cinnamon Chapters{% endblock %}
 {% block content %}
 
-<h2>Table reservation</h2>
+<h2 style="text-align: center; margin-bottom: 2rem;">Reserve a Table</h2>
 
+<div class="form-container">
     <form method="post">
         {{ form.hidden_tag() }}
 
-        <p>Choose a table type</p>
-        {{ form.table_type(class="form-control") }}
+        <label for="{{ form.table_type.id }}">Choose a table type</label>
+        {{ form.table_type(class="form-select") }}
 
-        {{ form.time(type="datetime-local", class="form-control", required=true) }}
+        <label for="{{ form.time.id }}">Pick a time</label>
+        {{ form.time(class="form-input", required=true) }}
 
         {{ form.latitude(id="latitude") }}
         {{ form.longitude(id="longitude") }}
 
-        {{ form.submit(class="btn btn-primary") }}
+        <div style="margin-top: 1.5rem;">
+            {{ form.submit(class="btn") }}
+        </div>
     </form>
-    <h3>{{ message }}</h3>
+</div>
 
+{% if message %}
+    <h3 style="margin-top: 2rem; color: #c2a582;">{{ message }}</h3>
+{% endif %}
 
-    <script src="{{ url_for('static', filename='js/flashes.js') }}"></script>
+<script src="{{ url_for('static', filename='js/flashes.js') }}"></script>
 
 {% endblock %}
+

@@ -27,12 +27,23 @@ load_dotenv()
 
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
 app.config['UPLOAD_FOLDER'] = FILES_PATH
-app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB
+app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
 app.config['MAX_FORM_PARTS'] = 500
 
 app.config['SESSION_COOKIE_SAMESITE'] = 'Strict'
 
 app.config['SECRET_KEY'] = '#cv)3v7w$*s3fk;5c!@y0?:?№3"9)#'
+
+MARGANETS_COORDS = (51.509865, -0.118092)
+
+LONDON_RADIUS_KM = 20
+
+TABLE_NUM = {
+    '1-2 people': 5,
+    '3-4 people': 3,
+    'more then 4 people': 2
+}
+
 
 login_manager = LoginManager()
 login_manager.init_app(app)
@@ -332,9 +343,6 @@ def reserved():
     message = ''
 
     if form.validate_on_submit():
-        if form.csrf_token.data != session.get("csrf_token"):
-            return "Request blocked.", 403
-
         table_type = form.table_type.data
         reserved_time_start = form.time.data
         user_latitude = form.latitude.data
@@ -364,6 +372,57 @@ def reserved():
 
     return render_template('reserved.html', form=form, message=message)
 
+@app.route('/reservations_check/', methods=['GET', 'POST'])
+@login_required
+def reservations_check():
+    if current_user.nickname != 'Admin':
+        return redirect(url_for('home'))
+
+    if request.method == "POST":
+        if request.form.get("csrf_token") != session["csrf_token"]:
+            return "Request blocked.", 403
+
+        reserv_id = request.form['reserv_id']
+        with Session() as cursor:
+            reservation = cursor.query(Reservation).filter_by(id=reserv_id).first()
+            cursor.delete(reservation)
+            cursor.commit()
+
+    with Session() as cursor:
+        all_reservations = cursor.query(Reservation).all()
+        return render_template('reservations_check.html', all_reservations=all_reservations, csrf_token=session["csrf_token"])
+
+@app.route('/menu_check/', methods=['GET', 'POST'])
+@login_required
+def menu_check():
+    form = DummyForm()
+    if current_user.nickname != 'Admin':
+        return redirect(url_for('home'))
+
+    if request.method == 'POST':
+
+        position_id = request.form['pos_id']
+        with Session() as cursor:
+            position_obj = cursor.query(Menu).filter_by(id=position_id).first()
+            if 'change_status' in request.form:
+                position_obj.active = not position_obj.active
+            elif 'delete_position' in request.form:
+                cursor.delete(position_obj)
+            cursor.commit()
+
+    with Session() as cursor:
+        all_positions = cursor.query(Menu).all()
+    return render_template('check_menu.html', all_positions=all_positions, csrf_token=session["csrf_token"], form=form)
+
+@app.route('/all_users/')
+@login_required
+def all_users():
+    if current_user.nickname != 'Admin':
+        return redirect(url_for('home'))
+
+    with Session() as cursor:
+        all_users = cursor.query(Users).with_entities(Users.id, Users.nickname, Users.email).all()
+    return render_template('all_users.html', all_users=all_users)
 
 
 if __name__ == '__main__':

@@ -17,10 +17,13 @@
                 {{ form.price(step="0.01") }}
             </div>
 
-            <div>
-              {{ form.img.label }}
-              {{ form.img(class_="btn") }}
+            <div class="custom-file-upload">
+                {{ form.img.label }}
+                <label for="img-upload" class="btn">Choose Image</label>
+                {{ form.img(id="img-upload", class_="input-file") }}
+                <span id="file-name" class="file-name-label">No file chosen</span>
             </div>
+
 
             <div>
                 {{ form.ingredients.label }}
@@ -47,5 +50,7 @@
             </div>
         </form>
 </div>
+
+<script src="{{ url_for('static', filename='js/flashes.js') }}"></script>
 
 {% endblock %}

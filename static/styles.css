@@ -217,5 +217,90 @@ input[type="text"], input[type="email"], input[type="password"] {
     gap: 0.5rem;
 }
 
+.form-select {
+    width: 100%;
+    padding: 0.6rem;
+    margin-bottom: 1rem;
+    background-color: #3b3431;
+    color: #f5efe6;
+    border: 1px solid #a47250;
+    border-radius: 6px;
+    font-family: 'Inter', serif;
+}
+
+.form-input {
+    width: 100%;
+    padding: 0.6rem;
+    background-color: #3b3431;
+    color: #f5efe6;
+    border: 1px solid #a47250;
+    border-radius: 6px;
+    margin-bottom: 1rem;
+    font-family: 'Inter', serif;
+}
+
+.styled-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 2rem 0;
+    font-size: 0.95rem;
+    background-color: #2a2522;
+    color: #f5efe6;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.styled-table th,
+.styled-table td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid #3b3431;
+}
+
+.styled-table th {
+    background-color: #3b3431;
+    color: #d6c4b2;
+    font-weight: bold;
+}
+
+.styled-table tr:last-child td {
+    border-bottom: none;
+}
+
+.styled-table tr:hover {
+    background-color: #3b2d2d;
+}
+
+.styled-table button {
+    margin-right: 0.5rem;
+}
+
+.input-file {
+  display: none;
+}
+
+.custom-file-upload {
+  margin-bottom: 1rem;
+}
+
+.custom-file-upload .btn {
+  display: inline-block;
+  cursor: pointer;
+}
+
+.file-name-label {
+  margin-left: 1rem;
+  font-style: italic;
+  color: #c2a582;
+  display: inline-block;
+  max-width: 200px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  vertical-align: middle;
+}
+
+
 
 

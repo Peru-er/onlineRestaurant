@@ -1,0 +1,27 @@
+
+{% extends 'base.html' %}
+{% block title %}Check menu - Cinnamon Chapters{% endblock %}
+{% block content %}
+<h2>Check menu</h2>
+<table class="styled-table">
+    <tr><th>ID</th><th>Name</th><th>Description</th><th>Price</th><th>Active</th><th>Action</th></tr>
+    {% for pos in all_positions %}
+    <tr>
+        <td>{{ pos.id }}</td>
+        <td>{{ pos.name }}</td>
+        <td>{{ pos.description }}</td>
+        <td>{{ pos.price }}</td>
+        <td>{{ "Yes" if pos.active else "No" }}</td>
+        <td>
+            <form method="post">
+                {{ form.hidden_tag() }}
+                <input type="hidden" name="pos_id" value="{{ pos.id }}">
+                <button class="btn" type="submit" name="change_status">Change status</button>
+                <button class="btn" type="submit" name="delete_position">Delete</button>
+            </form>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+
+{% endblock %}

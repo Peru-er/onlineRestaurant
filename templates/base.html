@@ -36,7 +36,8 @@
                     <span>Hello, {{ current_user.nickname }}!</span>
                     <a href="{{ url_for('logout') }}" class="btn">Logout</a>
                     {% if current_user.is_authenticated and current_user.nickname == 'Admin' %}
-                      <a href="{{ url_for('add_position') }}" class="btn">Add product</a>
+                        <a href="{{ url_for('add_position') }}" class="btn">Add product</a>
+                        <a href="{{ url_for('reservations_check') }}" class="btn">Reservations check</a>
                     {% endif %}
                 {% else %}
                     <a href="{{ url_for('login') }}" class="btn">Login</a>
