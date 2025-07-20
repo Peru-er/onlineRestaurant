@@ -301,6 +301,64 @@ input[type="text"], input[type="email"], input[type="password"] {
   vertical-align: middle;
 }
 
+/* === Hamburger Menu === */
+.nav-container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: transparent;
+}
+
+.hamburger {
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.hamburger span {
+  width: 25px;
+  height: 3px;
+  background-color: #a47250;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+
+.nav-menu {
+  position: absolute;
+  top: 60px;
+  right: 20px;
+  background-color: #2a2522;
+  border: 1px solid #a47250;
+  border-radius: 10px;
+  padding: 1rem;
+  display: none;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.nav-menu ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-menu li {
+  margin: 0.5rem 0;
+}
+
+.nav-menu a {
+  text-decoration: none;
+  color: #a47250;
+  font-weight: 500;
+}
+
+.nav-menu.show {
+  display: flex;
+}
 
 
 

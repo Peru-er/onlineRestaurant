@@ -18,31 +18,62 @@
     </div>
   {% endif %}
 {% endwith %}
-    <header>
+
+<header>
         <div class="header-container">
+
             <h1 class="logo">
                 <a href="{{ url_for('home') }}" class="home-link">Cinnamon Chapters</a>
             </h1>
 
             <div class="auth-buttons">
-                <a href="{{ url_for('menu') }}" class="btn">Menu</a>
-                <a href="{{ url_for('basket') }}" class="btn">Basket</a>
-                <a href="{{ url_for('my_orders') }}" class="btn">My Orders</a>
-                <a href="{{ url_for('reserved') }}" class="btn">Reserved</a>
-            </div>
 
-            <div class="auth-buttons">
                 {% if current_user.is_authenticated %}
+
                     <span>Hello, {{ current_user.nickname }}!</span>
-                    <a href="{{ url_for('logout') }}" class="btn">Logout</a>
+                    <nav class="nav-menu">
+                        <ul>
+                            <li><a href="{{ url_for('home') }}">Home</a></li>
+                            <li><a href="{{ url_for('menu') }}">Menu</a></li>
+                            <li><a href="{{ url_for('my_orders') }}">My orders</a></li>
+                            <li><a href="{{ url_for('basket') }}">Basket</a></li>
+                            <li><a href="{{ url_for('reserved') }}">Reservation</a></li>
+                            <li><a href="{{ url_for('logout') }}">Logout</a></li>
+                        </ul>
+                    </nav>
+
                     {% if current_user.is_authenticated and current_user.nickname == 'Admin' %}
-                        <a href="{{ url_for('add_position') }}" class="btn">Add product</a>
-                        <a href="{{ url_for('reservations_check') }}" class="btn">Reservations check</a>
+                        <nav class="nav-menu">
+                            <ul>
+                                <li><a href="{{ url_for('home') }}">Home</a></li>
+                                <li><a href="{{ url_for('menu') }}">Menu</a></li>
+                                <li><a href="{{ url_for('my_orders') }}">My orders</a></li>
+                                <li><a href="{{ url_for('basket') }}">Basket</a></li>
+                                <li><a href="{{ url_for('reserved') }}">Reservation</a></li>
+                                <li><a href="{{ url_for('menu_check') }}">Check menu</a></li>
+                                <li><a href="{{ url_for('reservations_check') }}">Reservations check</a></li>
+                                <li><a href="{{ url_for('all_users') }}">All users</a></li>
+                                <li><a href="{{ url_for('logout') }}">Logout</a></li>
+                            </ul>
+                        </nav>
                     {% endif %}
+
                 {% else %}
-                    <a href="{{ url_for('login') }}" class="btn">Login</a>
+                    <nav class="nav-menu">
+                        <ul>
+                            <li><a href="{{ url_for('home') }}">Home</a></li>
+                            <li><a href="{{ url_for('menu') }}">Menu</a></li>
+                        </ul>
+                    </nav>
                     <a href="{{ url_for('register') }}" class="btn">Sign up</a>
+                    <a href="{{ url_for('login') }}" class="btn">Login</a>
                 {% endif %}
+
+                <div class="hamburger" id="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
             </div>
         </div>
     </header>
@@ -55,5 +86,6 @@
         &copy; 2025 Cinnamon Chapters — a café for book lovers and dreamers.
     </footer>
     <script src="{{ url_for('static', filename='js/flashes.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/hamburger.js') }}"></script>
 </body>
 </html>
