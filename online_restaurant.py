@@ -126,6 +126,7 @@ def login():
 def logout():
     logout_user()
     session.clear()
+    flash('Successfully logged out.', 'success')
     return redirect(url_for('home'))
 
 @app.route("/add_position/", methods=['GET', 'POST'])

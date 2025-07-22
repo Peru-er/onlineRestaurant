@@ -1,91 +1,79 @@
 
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Cinnamon Chapters{% endblock %}</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Inter&family=Lora&display=swap" rel="stylesheet">
-</head>
-<body>
-{% with messages = get_flashed_messages(with_categories=true) %}
-  {% if messages %}
-    <div class="flashes">
-      {% for category, message in messages %}
-        <p class="flash {{ category }}">{{ message }}</p>
-      {% endfor %}
-    </div>
-  {% endif %}
-{% endwith %}
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>{% block title %}Cinnamon Chapters{% endblock %}</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+        <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Inter&family=Lora&display=swap" rel="stylesheet">
+    </head>
+    <body>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="flashes">
+                    {% for category, message in messages %}
+                        <p class="flash {{ category }}">{{ message }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
 
-<header>
-        <div class="header-container">
+        <header>
+            <div class="header-container">
+                <h1 class="logo">
+                    <a href="{{ url_for('home') }}" class="home-link">Cinnamon Chapters</a>
+                </h1>
 
-            <h1 class="logo">
-                <a href="{{ url_for('home') }}" class="home-link">Cinnamon Chapters</a>
-            </h1>
+                <div class="header-right">
+                    <div class="auth-buttons">
+                        {% if current_user.is_authenticated %}
+                        <span class="greeting">Hello, {{ current_user.nickname }}!</span>
+                    {% else %}
+                        <a href="{{ url_for('register') }}" class="btn">Sign up</a>
+                        <a href="{{ url_for('login') }}" class="btn">Login</a>
+                    {% endif %}
+                    </div>
 
-            <div class="auth-buttons">
+                    <div class="hamburger" id="hamburger">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </div>
 
-                {% if current_user.is_authenticated %}
+                <nav class="nav-menu">
+                    <ul>
+                        <li><a href="{{ url_for('menu') }}">Menu</a></li>
 
-                    <span>Hello, {{ current_user.nickname }}!</span>
-                    <nav class="nav-menu">
-                        <ul>
-                            <li><a href="{{ url_for('home') }}">Home</a></li>
-                            <li><a href="{{ url_for('menu') }}">Menu</a></li>
+                        {% if current_user.is_authenticated %}
                             <li><a href="{{ url_for('my_orders') }}">My orders</a></li>
                             <li><a href="{{ url_for('basket') }}">Basket</a></li>
                             <li><a href="{{ url_for('reserved') }}">Reservation</a></li>
-                            <li><a href="{{ url_for('logout') }}">Logout</a></li>
-                        </ul>
-                    </nav>
 
-                    {% if current_user.is_authenticated and current_user.nickname == 'Admin' %}
-                        <nav class="nav-menu">
-                            <ul>
-                                <li><a href="{{ url_for('home') }}">Home</a></li>
-                                <li><a href="{{ url_for('menu') }}">Menu</a></li>
-                                <li><a href="{{ url_for('my_orders') }}">My orders</a></li>
-                                <li><a href="{{ url_for('basket') }}">Basket</a></li>
-                                <li><a href="{{ url_for('reserved') }}">Reservation</a></li>
+                            {% if current_user.is_authenticated and current_user.nickname == 'Admin' %}
                                 <li><a href="{{ url_for('menu_check') }}">Check menu</a></li>
                                 <li><a href="{{ url_for('reservations_check') }}">Reservations check</a></li>
                                 <li><a href="{{ url_for('all_users') }}">All users</a></li>
-                                <li><a href="{{ url_for('logout') }}">Logout</a></li>
-                            </ul>
-                        </nav>
-                    {% endif %}
-
-                {% else %}
-                    <nav class="nav-menu">
-                        <ul>
-                            <li><a href="{{ url_for('home') }}">Home</a></li>
-                            <li><a href="{{ url_for('menu') }}">Menu</a></li>
-                        </ul>
-                    </nav>
-                    <a href="{{ url_for('register') }}" class="btn">Sign up</a>
-                    <a href="{{ url_for('login') }}" class="btn">Login</a>
-                {% endif %}
-
-                <div class="hamburger" id="hamburger">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </div>
+                                <li><a href="{{ url_for('add_position') }}">Add position</a></li>
+                            {% endif %}
+                        <li><a href="{{ url_for('logout') }}">Logout</a></li>
+                        {% endif %}
+                    </ul>
+                </nav>
             </div>
-        </div>
-    </header>
+        </header>
 
-    <main>
-        {% block content %}{% endblock %}
-    </main>
+        <main>
+            {% block content %}{% endblock %}
+        </main>
 
-    <footer>
-        &copy; 2025 Cinnamon Chapters — a café for book lovers and dreamers.
-    </footer>
-    <script src="{{ url_for('static', filename='js/flashes.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/hamburger.js') }}"></script>
-</body>
+        <footer>
+            &copy; 2025 Cinnamon Chapters — a café for book lovers and dreamers.
+        </footer>
+
+        <script src="{{ url_for('static', filename='js/flashes.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/hamburger.js') }}"></script>
+    </body>
 </html>
+

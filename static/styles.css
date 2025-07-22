@@ -2,7 +2,15 @@
 body {
     margin: 0;
     padding: 0;
+
     background-color: #1e1b18;
+    background-image:
+        linear-gradient(rgba(30, 27, 24, 0.92), rgba(30, 27, 24, 0.92)),
+        url('/static/images/autumn.svg');
+    background-repeat: repeat;
+    background-size: 250px;
+    background-attachment: fixed;
+
     color: #f5efe6;
     font-family: 'Lora', 'Inter', serif;
     display: flex;
@@ -10,6 +18,8 @@ body {
     min-height: 100vh;
 }
 
+
+/* === HEADER === */
 header {
     background-color: #2a2522;
     padding: 1rem 2rem;
@@ -22,88 +32,24 @@ header {
     align-items: center;
 }
 
+/* Контейнеры для левой и правой части хедера */
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
 .logo {
     font-family: 'Playfair Display', serif;
     font-size: 2.2rem;
     margin: 0;
     color: #f5efe6;
-}
-
-.auth-buttons a {
-    margin-left: 1rem;
-}
-
-main {
-    flex: 1;
-    padding: 2rem;
-    max-width: 700px;
-    margin: 0 auto;
-}
-
-footer {
-    background-color: #2a2522;
-    text-align: center;
-    padding: 1rem;
-    font-size: 0.9rem;
-    color: #c2a582;
-}
-
-.btn {
-    background-color: transparent;
-    color: #a47250;
-    border: 1px solid #a47250;
-    padding: 6px 12px;
-    border-radius: 10px;
-    font-size: 14px;
-    font-weight: bold;
-    cursor: pointer;
-    line-height: 1.2;
-    transition: all 0.3s;
-    text-decoration: none;
-    min-width: auto;
-}
-
-.btn:hover {
-    background-color: #a47250;
-    color: #1e1b18;
-}
-
-.form-container {
-    background-color: #2a2522;
-    padding: 5rem;
-    border-radius: 14px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-}
-
-input, label {
-    display: block;
-    width: 100%;
-    margin-bottom: 1rem;
-}
-
-input[type="text"], input[type="email"], input[type="password"] {
-    padding: 0.5rem;
-    border: 1px solid #a47250;
-    border-radius: 6px;
-    background-color: #3b3431;
-    color: #f5efe6;
-}
-
-.flash.error {
-    color: #ffb3a7;
-    font-weight: bold;
-}
-
-.intro-text {
-    font-size: 1.2rem;
-    margin: 1rem 0;
-    color: #d6c4b2;
-}
-
-.greeting {
-    margin-top: 1rem;
-    font-style: italic;
-    color: #c2a582;
 }
 
 .logo a,
@@ -117,59 +63,180 @@ input[type="text"], input[type="email"], input[type="password"] {
     color: #c2a582;
 }
 
-.hidden-file-input {
-    display: none;
+.auth-buttons a {
+    margin-left: 1rem;
 }
 
+/* === MAIN === */
+main {
+    flex: 1;
+    padding: 2rem;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+/* === FOOTER === */
+footer {
+    background-color: #2a2522;
+    text-align: center;
+    padding: 1rem;
+    font-size: 0.9rem;
+    color: #c2a582;
+}
+
+/* === Кнопки === */
+.btn {
+    background-color: transparent;
+    color: #a47250;
+    border: 1px solid #a47250;
+    padding: 6px 12px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    line-height: 1.2;
+    transition: all 0.3s;
+    text-decoration: none;
+}
+
+.btn:hover {
+    background-color: #a47250;
+    color: #1e1b18;
+}
+
+/* === Формы === */
+.form-container {
+    background-color: #2a2522;
+    padding: 5rem;
+    border-radius: 14px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+input, label {
+    display: block;
+    width: 100%;
+    margin-bottom: 1rem;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+    padding: 0.5rem;
+    border: 1px solid #a47250;
+    border-radius: 6px;
+    background-color: #3b3431;
+    color: #f5efe6;
+}
+
+.form-select,
+.form-input {
+    width: 100%;
+    padding: 0.6rem;
+    margin-bottom: 1rem;
+    background-color: #3b3431;
+    color: #f5efe6;
+    border: 1px solid #a47250;
+    border-radius: 6px;
+    font-family: 'Inter', serif;
+}
+
+/* === Flash-сообщения === */
 .flashes {
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  z-index: 1000;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
 .flash {
-  background-color: #3b3431;
-  border-left: 6px solid #a47250;
-  color: #f5efe6;
-  padding: 1rem 1.5rem;
-  border-radius: 12px;
-  font-weight: 500;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
-  animation: fadeInOut 4s ease-in-out forwards;
-  opacity: 0;
+    background-color: #3b3431;
+    border-left: 6px solid #a47250;
+    color: #f5efe6;
+    padding: 1rem 1.5rem;
+    border-radius: 12px;
+    font-weight: 500;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    opacity: 0;
+    cursor: pointer;
+    position: relative;
+
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    transform: translateY(-10px);
+}
+
+.flash-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.flash-hide {
+    opacity: 0;
+    transform: translateY(-10px);
 }
 
 .flash.success {
-  border-color: #8ec07c;
-  background-color: #2d372e;
-  color: #ccebc5;
+    border-color: #8ec07c;
+    background-color: #2d372e;
+    color: #ccebc5;
 }
 
 .flash.error {
-  border-color: #fb4934;
-  background-color: #3b2d2d;
-  color: #ffc9c9;
+    border-color: #fb4934;
+    background-color: #3b2d2d;
+    color: #ffc9c9;
 }
 
 @keyframes fadeInOut {
-  0% { opacity: 0; transform: translateY(-10px); }
-  10% { opacity: 1; transform: translateY(0); }
-  90% { opacity: 1; transform: translateY(0); }
-  100% { opacity: 0; transform: translateY(-10px); }
+    0% { opacity: 0; transform: translateY(-10px); }
+    10% { opacity: 1; transform: translateY(0); }
+    90% { opacity: 1; transform: translateY(0); }
+    100% { opacity: 0; transform: translateY(-10px); }
 }
 
-.custom-file-upload input[type="file"] {
-  display: none;
+/* === Приветствие, текст === */
+.intro-text {
+    font-size: 1.2rem;
+    margin: 1rem 0;
+    color: #d6c4b2;
 }
 
+.greeting {
+    margin-top: 1rem;
+    font-style: italic;
+    color: #c2a582;
+}
+
+/* === Файлы === */
+.hidden-file-input,
 .input-file {
-  display: none;
+    display: none;
 }
 
+.custom-file-upload {
+    margin-bottom: 1rem;
+}
+
+.custom-file-upload .btn {
+    display: inline-block;
+    cursor: pointer;
+}
+
+.file-name-label {
+    margin-left: 1rem;
+    font-style: italic;
+    color: #c2a582;
+    display: inline-block;
+    max-width: 200px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    vertical-align: middle;
+}
+
+/* === Корзина === */
 .basket-container {
     background-color: #2a2522;
     padding: 2rem;
@@ -217,28 +284,7 @@ input[type="text"], input[type="email"], input[type="password"] {
     gap: 0.5rem;
 }
 
-.form-select {
-    width: 100%;
-    padding: 0.6rem;
-    margin-bottom: 1rem;
-    background-color: #3b3431;
-    color: #f5efe6;
-    border: 1px solid #a47250;
-    border-radius: 6px;
-    font-family: 'Inter', serif;
-}
-
-.form-input {
-    width: 100%;
-    padding: 0.6rem;
-    background-color: #3b3431;
-    color: #f5efe6;
-    border: 1px solid #a47250;
-    border-radius: 6px;
-    margin-bottom: 1rem;
-    font-family: 'Inter', serif;
-}
-
+/* === Таблицы === */
 .styled-table {
     width: 100%;
     border-collapse: collapse;
@@ -276,89 +322,62 @@ input[type="text"], input[type="email"], input[type="password"] {
     margin-right: 0.5rem;
 }
 
-.input-file {
-  display: none;
-}
-
-.custom-file-upload {
-  margin-bottom: 1rem;
-}
-
-.custom-file-upload .btn {
-  display: inline-block;
-  cursor: pointer;
-}
-
-.file-name-label {
-  margin-left: 1rem;
-  font-style: italic;
-  color: #c2a582;
-  display: inline-block;
-  max-width: 200px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  vertical-align: middle;
-}
-
 /* === Hamburger Menu === */
 .nav-container {
-  max-width: 1200px;
-  margin: auto;
-  padding: 1rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: transparent;
+    max-width: 1200px;
+    margin: auto;
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: transparent;
 }
 
 .hamburger {
-  cursor: pointer;
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
 }
 
 .hamburger span {
-  width: 25px;
-  height: 3px;
-  background-color: #a47250;
-  border-radius: 2px;
-  transition: all 0.3s ease;
+    width: 25px;
+    height: 3px;
+    background-color: #a47250;
+    border-radius: 2px;
+    transition: all 0.3s ease;
 }
 
 .nav-menu {
-  position: absolute;
-  top: 60px;
-  right: 20px;
-  background-color: #2a2522;
-  border: 1px solid #a47250;
-  border-radius: 10px;
-  padding: 1rem;
-  display: none;
-  flex-direction: column;
-  gap: 10px;
+    position: absolute;
+    top: 60px;
+    right: 20px;
+    background-color: #2a2522;
+    border: 1px solid #a47250;
+    border-radius: 10px;
+    padding: 1rem;
+    display: none;
+    flex-direction: column;
+    gap: 10px;
 }
 
 .nav-menu ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
+    list-style: none;
+    margin: 0;
+    padding: 0;
 }
 
 .nav-menu li {
-  margin: 0.5rem 0;
+    margin: 0.5rem 0;
 }
 
 .nav-menu a {
-  text-decoration: none;
-  color: #a47250;
-  font-weight: 500;
+    text-decoration: none;
+    color: #a47250;
+    font-weight: 500;
 }
 
 .nav-menu.show {
-  display: flex;
+    display: flex;
 }
-
-
 
