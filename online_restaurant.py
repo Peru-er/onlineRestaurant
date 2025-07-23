@@ -34,16 +34,15 @@ app.config['SESSION_COOKIE_SAMESITE'] = 'Strict'
 
 app.config['SECRET_KEY'] = '#cv)3v7w$*s3fk;5c!@y0?:?№3"9)#'
 
-MARGANETS_COORDS = (51.509865, -0.118092)
+CAFE_COORDS = (38.710806, 16.118000)
 
-LONDON_RADIUS_KM = 20
+RESERVATION_RADIUS_KM = 10
 
 TABLE_NUM = {
-    '1-2 people': 5,
-    '3-4 people': 3,
-    'more then 4 people': 2
+    '1-2': 5,
+    '3-4': 3,
+    '4+': 2
 }
-
 
 login_manager = LoginManager()
 login_manager.init_app(app)
@@ -168,9 +167,24 @@ def add_position():
 
 @app.route('/menu/')
 def menu():
+    selected_category = request.args.get('category')
+
     with Session() as session:
-        all_positions = session.query(Menu).filter_by(active=True).all()
-    return render_template('menu.html', all_positions=all_positions)
+        categories = session.query(Menu.category).distinct().all()
+        categories = [c[0] for c in categories]
+
+        if selected_category:
+            all_positions = session.query(Menu).filter_by(active=True, category=selected_category).all()
+        else:
+            all_positions = session.query(Menu).filter_by(active=True).all()
+
+    return render_template(
+        'menu.html',
+        all_positions=all_positions,
+        categories=categories,
+        selected_category=selected_category
+    )
+
 
 @app.route('/position/<name>', methods=['GET', 'POST'])
 def position(name):
@@ -254,7 +268,7 @@ def clear_basket():
     flash("Basket cleared.")
     return redirect(url_for('basket'))
 
-@app.route('/update_quantity', methods=['POST'])
+@app.route('/update_quantity/', methods=['POST'])
 def update_quantity():
     item_name = request.form.get('item_name')
     action = request.form.get('action')
@@ -350,12 +364,12 @@ def reserved():
         user_longitude = form.longitude.data
 
         if not user_longitude or not user_latitude:
-            message = 'You have not provided your location information.'
+            flash('You have not provided your location information.', 'warning')
         else:
             user_cords = (float(user_latitude), float(user_longitude))
-            distance = geodesic(MARGANETS_COORDS, user_cords).km
-            if distance > LONDON_RADIUS_KM:
-                message = "You are in an area not available for booking."
+            distance = geodesic(CAFE_COORDS, user_cords).km
+            if distance > RESERVATION_RADIUS_KM:
+                flash("You are in an area not available for booking.", 'danger')
             else:
                 with Session() as cursor:
                     reserved_check = cursor.query(Reservation).filter_by(type_table=table_type).count()
@@ -365,23 +379,22 @@ def reserved():
                         new_reserved = Reservation(type_table=table_type, time_start=reserved_time_start, user_id=current_user.id)
                         cursor.add(new_reserved)
                         cursor.commit()
-                        message = f'Reservation for {reserved_time_start} table for {table_type} people has been successfully created.'
+                        flash(f'Reservation for {reserved_time_start} table for {table_type} people has been successfully created.', 'success')
                     elif user_reserved_check:
-                        message = 'You can only have one active reservation.'
+                        flash('You can only have one active reservation.', 'info')
                     else:
-                        message = 'Unfortunately, this type of table is currently not available for reservation.'
+                        flash('Unfortunately, this type of table is currently not available for reservation.', 'warning')
 
-    return render_template('reserved.html', form=form, message=message)
+    return render_template('reserved.html', form=form)
 
 @app.route('/reservations_check/', methods=['GET', 'POST'])
 @login_required
 def reservations_check():
+    form = DummyForm()
     if current_user.nickname != 'Admin':
         return redirect(url_for('home'))
 
     if request.method == "POST":
-        if request.form.get("csrf_token") != session["csrf_token"]:
-            return "Request blocked.", 403
 
         reserv_id = request.form['reserv_id']
         with Session() as cursor:
@@ -391,7 +404,7 @@ def reservations_check():
 
     with Session() as cursor:
         all_reservations = cursor.query(Reservation).all()
-        return render_template('reservations_check.html', all_reservations=all_reservations, csrf_token=session["csrf_token"])
+        return render_template('reservations_check.html', all_reservations=all_reservations, form=form)
 
 @app.route('/menu_check/', methods=['GET', 'POST'])
 @login_required

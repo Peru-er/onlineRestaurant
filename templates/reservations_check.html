@@ -3,6 +3,16 @@
 {% block title %}Reservation check - Cinnamon Chapters{% endblock %}
 {% block content %}
 
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    <div class="flash-container">
+      {% for category, message in messages %}
+        <div class="flash flash-{{ category }}">{{ message }}</div>
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endwith %}
+
 <h2>Reservation check</h2>
 <table class="styled-table">
     <tr>
@@ -20,7 +30,7 @@
         <td>{{ res.user.nickname }}</td>
         <td>
             <form method="post">
-                <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+                {{ form.hidden_tag() }}
                 <input type="hidden" name="reserv_id" value="{{ res.id }}">
                 <button class="btn" type="submit">Delete</button>
             </form>

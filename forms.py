@@ -49,5 +49,3 @@ class ReserveTableForm(FlaskForm):
     latitude = HiddenField('Latitude')
     longitude = HiddenField('Longitude')
     submit = SubmitField('Reserve')
-
-

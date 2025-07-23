@@ -2,7 +2,17 @@
 {% extends "base.html" %}
 {% block title %}Menu - Cinnamon Chapters{% endblock %}
 {% block content %}
-<h2>Our menu</h2>
+<h2>Our Menu</h2>
+
+    <div class="category-buttons">
+        <a href="{{ url_for('menu') }}" class="btn {% if not selected_category %}active{% endif %}">All</a>
+        {% for category in categories %}
+            <a href="{{ url_for('menu', category=category) }}" class="btn {% if selected_category == category %}active{% endif %}">
+                {{ category }}
+            </a>
+        {% endfor %}
+    </div>
+
     {% for position in all_positions %}
         <div class="form-container">
             <img src="/static/menu/{{ position.file_name }}" alt="{{ position.name }}" width="200">

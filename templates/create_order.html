@@ -3,18 +3,19 @@
 {% block title %}Create an order - Cinnamon Chapters{% endblock %}
 {% block content %}
 
-    {%if basket%}
-        <ul>
-            {%for position in basket%}
-                <li>{{position}}, number:{{basket[position]}}</li>
-            {%endfor%}
-        </ul>
-        <form method="POST">
-            {{ form.hidden_tag() }}
-            {{ form.submit(class="btn") }}
-        </form>
-    {%else%}
-        <h1>Your list of orders is empty.</h1>
-    {%endif%}
+<div class="form-container">
+    <h2>Create an order</h2>
+
+    <ul>
+        {% for position in basket %}
+            <li>{{ position }}, number: {{ basket[position] }}</li>
+        {% endfor %}
+    </ul>
+    <form method="POST">
+        {{ form.hidden_tag() }}
+        {{ form.submit(class="btn") }}
+    </form>
+</div>
 
 {% endblock %}
+

@@ -1,5 +1,5 @@
 
-window.onload = function() {
+window.onload = function () {
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
             function (position) {
@@ -13,4 +13,15 @@ window.onload = function() {
     } else {
         console.warn("Geolocation is not supported in your browser.");
     }
+
+    const form = document.querySelector('form');
+    form.addEventListener('submit', function (event) {
+        const lat = document.getElementById("latitude").value;
+        const lon = document.getElementById("longitude").value;
+
+        if (!lat || !lon) {
+            event.preventDefault();
+            alert("Location not available. Please allow geolocation to make a reservation.");
+        }
+    });
 };

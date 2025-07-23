@@ -110,6 +110,7 @@ footer {
     padding: 5rem;
     border-radius: 14px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    margin-top: 1.5rem;
 }
 
 input, label {
@@ -379,5 +380,110 @@ input[type="password"] {
 
 .nav-menu.show {
     display: flex;
+}
+
+/* === Position === */
+
+.position-container {
+    background-color: #2a2522;
+    border-radius: 14px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    padding: 2rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    align-items: flex-start;
+    margin-top: 2rem;
+}
+
+.position-image-block {
+    flex: 1 1 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.position-image {
+    width: 100%;
+    max-width: 300px;
+    height: auto;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+.position-info {
+    flex: 2 1 400px;
+}
+
+.position-name {
+    font-size: 1.8rem;
+    color: #f5efe6;
+    margin-bottom: 0.5rem;
+}
+
+.position-ingredients {
+    font-style: italic;
+    color: #c2a582;
+    margin-bottom: 1rem;
+}
+
+.position-section-title {
+    color: #d6c4b2;
+    margin-bottom: 0.5rem;
+    margin-top: 1.5rem;
+}
+
+.position-description {
+    white-space: pre-wrap;
+    background-color: #3b3431;
+    padding: 1rem;
+    border-radius: 10px;
+    border-left: 4px solid #a47250;
+    color: #f5efe6;
+    font-family: 'Inter', serif;
+    margin-bottom: 1.5rem;
+}
+
+.position-price {
+    font-weight: bold;
+    font-size: 1.3rem;
+    color: #d6c4b2;
+    margin-bottom: 1.5rem;
+}
+
+.position-form {
+    display: flex;
+    gap: 1rem;
+    align-items: cen
+
+
+.category-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 2rem auto 2.5rem;
+    justify-content: center;
+}
+
+.category-buttons .btn {
+    padding: 0.5rem 1rem;
+    background-color: #3b3431;
+    color: #c2a582;
+    border: 1px solid #a47250;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.category-buttons .btn:hover {
+    background-color: #a47250;
+    color: #1e1b18;
+}
+
+.category-buttons .btn.active {
+    background-color: #a47250;
+    color: #1e1b18;
+    border-color: #a47250;
 }
 

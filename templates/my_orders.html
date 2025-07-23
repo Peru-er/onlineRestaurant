@@ -3,10 +3,12 @@
 {% block title %}My orders - Cinnamon Chapters{% endblock %}
 {% block content %}
 
+<div class="form-container">
     <h2>Yours orders</h2>
     {% for order in us_orders %}
-        <p>Order №{{ order.id }} from {{ order.order_time }}</p>
+        <p>Order №{{ order.id }} from {{ order.order_time.strftime('%Y-%m-%d %H:%M') }}</p>
         <a href="/my_order/{{ order.id }}" class="btn">View in more detail</a>
     {% endfor %}
+</div>
 
 {% endblock %}
